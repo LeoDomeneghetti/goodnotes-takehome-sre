@@ -10,4 +10,6 @@ stringData:
   type: git
   url: git@github.com:LeoDomeneghetti/goodnotes-takehome-sre.git
   sshPrivateKey: |
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    -----END OPENSSH PRIVATE KEY-----
     
