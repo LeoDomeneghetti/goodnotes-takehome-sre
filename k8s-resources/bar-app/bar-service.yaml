@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bar-app-service
+  labels:
+    namespace: goodnotes-takehome
+spec:
+  ports:
+  - name: bar-port
+    port: 8083
+    targetPort: 5000
+  selector:
+    app: bar-app
+    namespace: goodnotes-takehome
+    tier: backend

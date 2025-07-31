@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: foo-app-ingress
+spec:
+  rules:
+  - host: foo.localhost
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        path: /
+        backend:
+          service:
+            name: foo-app-service
+            port:
+              number: 8082

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-app-deployment
+  labels:
+    app: bar-app
+    tier: backend
+spec:
+  template:
+    metadata:
+        name: bar-app
+        namespace: goodnotes-takehome
+        labels:
+          app: bar-app
+          namespace: goodnotes-takehome
+          tier: backend
+    spec:
+      containers:
+        - name: bar-app
+          image: leodomeneghetti/bar-app:v1.0.0
+      nodeSelector:
+        kubernetes.io/hostname: "goodnotes-multi-node-worker"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar-app
+      namespace: goodnotes-takehome
+      tier: backend
+

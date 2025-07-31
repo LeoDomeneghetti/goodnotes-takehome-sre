@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foo
+  namespace: argocd
+spec:
+  project: goodnotes-takehome
+  source:
+    repoURL: git@github.com:LeoDomeneghetti/goodnotes-takehome-sre.git
+    targetRevision: dev
+    path: k8s-resources/foo-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: goodnotes-takehome
