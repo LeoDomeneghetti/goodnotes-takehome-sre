@@ -4,11 +4,10 @@ metadata:
   name: foo-app-ingress
 spec:
   rules:
-  - host: foo.localhost
-    http:
+  - http:
       paths:
       - pathType: ImplementationSpecific
-        path: /
+        path: /foo
         backend:
           service:
             name: foo-app-service

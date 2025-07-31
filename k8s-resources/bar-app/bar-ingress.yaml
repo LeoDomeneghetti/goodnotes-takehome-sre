@@ -4,11 +4,10 @@ metadata:
   name: bar-app-ingress
 spec:
   rules:
-  - host: bar.localhost
-    http:
+  - http:
       paths:
       - pathType: ImplementationSpecific
-        path: /
+        path: /bar
         backend:
           service:
             name: bar-app-service
