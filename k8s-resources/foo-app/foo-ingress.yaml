@@ -13,6 +13,5 @@ spec:
         backend:
           service:
             name: foo-app-service
-            namespace: goodnotes-takehome
             port:
-              name: foo-port
+              number: 8082

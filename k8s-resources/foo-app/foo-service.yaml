@@ -1,19 +1,16 @@
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
   name: foo-app-service
   namespace: goodnotes-takehome
   labels:
     namespace: goodnotes-takehome
 spec:
-  type: NodePort
-  ports:
-  - name: foo-port
-    port: 8082
-    targetPort: 5000
-    nodePort: 30009
-    protocol: TCP
+  type: LoadBalancer
   selector:
     app: foo-app
     namespace: goodnotes-takehome
     tier: backend
+  ports:
+  - port: 8082
+    targetPort: 5000
