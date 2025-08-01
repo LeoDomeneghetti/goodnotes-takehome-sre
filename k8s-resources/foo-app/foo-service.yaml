@@ -5,10 +5,13 @@ metadata:
   labels:
     namespace: goodnotes-takehome
 spec:
+  type: NodePort
   ports:
   - name: foo-port
     port: 8082
     targetPort: 5000
+    nodePort: 30009
+    protocol: TCP
   selector:
     app: foo-app
     namespace: goodnotes-takehome

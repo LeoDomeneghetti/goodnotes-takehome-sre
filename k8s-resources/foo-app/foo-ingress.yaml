@@ -12,4 +12,4 @@ spec:
           service:
             name: foo-app-service
             port:
-              number: 8082
+              name: foo-port

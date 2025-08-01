@@ -18,6 +18,8 @@ spec:
       containers:
         - name: bar-app
           image: leodomeneghetti/bar-app:v1.0.0
+      nodeSelector:
+        kubernetes.io/hostname: "goodnotes-multi-node-worker2"
   replicas: 1
   selector:
     matchLabels:
