@@ -1,29 +1,10 @@
-apiVersion: apps/v1
-kind: Deployment
+kind: Pod
+apiVersion: v1
 metadata:
-  name: foo-app-deployment
+  name: foo-app
   labels:
-    app: foo-app
-    tier: backend
+    app: foo
 spec:
-  template:
-    metadata:
-        name: foo-app
-        namespace: goodnotes-takehome
-        labels:
-          app: foo-app
-          namespace: goodnotes-takehome
-          tier: backend
-    spec:
-      containers:
-        - name: foo-app
-          image: leodomeneghetti/foo-app:v1.0.0
-      nodeSelector:
-        kubernetes.io/hostname: "goodnotes-multi-node-worker"
-  replicas: 1
-  selector:
-    matchLabels:
-      app: foo-app
-      namespace: goodnotes-takehome
-      tier: backend
-
+  containers:
+    image: leodomeneghetti/bar-app:v1.0.0
+    name: foo-app

@@ -1,16 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: foo-app-service
-  namespace: goodnotes-takehome
-  labels:
-    namespace: goodnotes-takehome
+  name: foo-service
 spec:
-  type: LoadBalancer
   selector:
-    app: foo-app
-    namespace: goodnotes-takehome
-    tier: backend
+    app: foo
   ports:
-  - port: 8082
-    targetPort: 5000
+  # Default port used by the image
+  - port: 5000
