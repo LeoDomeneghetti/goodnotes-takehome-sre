@@ -6,7 +6,7 @@ spec:
   rules:
   - http:
       paths:
-      - pathType: ImplementationSpecific
+      - pathType: Prefix
         path: /foo
         backend:
           service:
