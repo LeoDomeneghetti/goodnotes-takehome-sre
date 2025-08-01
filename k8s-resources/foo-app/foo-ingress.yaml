@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: foo-app-ingress
+  labels:
+    namespace: goodnotes-takehome
 spec:
   rules:
   - http:
@@ -11,5 +13,6 @@ spec:
         backend:
           service:
             name: foo-app-service
+            namespace: goodnotes-takehome
             port:
               name: foo-port
