@@ -18,8 +18,6 @@ spec:
       containers:
         - name: foo-app
           image: leodomeneghetti/foo-app:v1.0.0
-      nodeSelector:
-        kubernetes.io/hostname: "goodnotes-multi-node-worker2"
   replicas: 1
   selector:
     matchLabels:
