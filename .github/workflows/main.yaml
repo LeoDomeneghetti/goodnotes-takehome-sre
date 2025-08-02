@@ -40,9 +40,18 @@ jobs:
         kubectl apply -f k8s-resources/bar-app/bar-service.yaml  -n goodnotes-takehome
         kubectl apply -f k8s-resources/bar-app/bar-ingress.yaml  -n goodnotes-takehome
 
-    - name: Start NGINX Port-Fowarding
-      run: kubectl port-forward --namespace ingress-nginx service/ingress-nginx-controller 80:80
+    - name: Export kubeconfig
+      run: kind export kubeconfig --kubeconfig
 
+    - name: Start NGINX Port-Fowarding
+      uses: vbem/k8s-port-forward@v1
+      with:
+        name: service/ingress-nginx-controller
+        namespace: ingress-nginx
+        local-port: 80
+        pod-port: 80
+        kubeconfig: ~/.kube/config
+        
     - name: Modify /etc/hosts file
       run: |
         echo "127.0.0.1 foo.localhost" | sudo tee -a /etc/hosts
