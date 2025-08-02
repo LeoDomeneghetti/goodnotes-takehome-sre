@@ -1,0 +1,69 @@
+name: Application Load Test
+
+on: pull_request
+
+jobs:
+  create-cluster:
+    name: Create and Setup k8s Kind Cluster
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4
+    - name: Create Cluster
+      uses: helm/kind-action@v1.12.0
+      with:
+        config: kind-setup/cluster-config.yaml
+        cluster_name: goodnotes-multi-node
+        node_image: kindest/node:v1.33.1@sha256:050072256b9a903bd914c0b2866828150cb229cea0efe5892e2b644d5dd3b34f 
+    - name: Export kubeconfig
+      run: |
+        kind export kubeconfig --name goodnotes-multi-node --kubeconfig .kube/config
+        KUBE_CONFIG=`cat .kube/config | base64 -w 0` >> $GITHUB_ENV
+        echo $KUBE_CONFIG
+    - name: Create goodnotes-takehome Namespace
+      uses: actions-hub/kubectl@master
+      env:
+        KUBE_CONFIG: $KUBE_CONFIG
+      with:
+        args: create namespace goodnotes-takehome
+      
+    - name: Install NGINX Ingress Controller 
+      run: |
+        kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/refs/heads/main/deploy/static/provider/kind/deploy.yaml
+        kubectl wait --namespace ingress-nginx \
+        --for=condition=ready pod \
+        --selector=app.kubernetes.io/component=controller \
+        --timeout=120s
+    - name: Deploy foo resources
+      run: |
+        kubectl apply -f k8s-resources/foo-app/foo-deployment.yaml  -n goodnotes-takehome
+        kubectl apply -f k8s-resources/foo-app/foo-service.yaml  -n goodnotes-takehome
+        kubectl apply -f k8s-resources/foo-app/foo-ingress.yaml  -n goodnotes-takehome
+    - name: Deploy bar resources
+      run: |
+        kubectl apply -f k8s-resources/bar-app/bar-deployment.yaml  -n goodnotes-takehome
+        kubectl apply -f k8s-resources/bar-app/bar-service.yaml  -n goodnotes-takehome
+        kubectl apply -f k8s-resources/bar-app/bar-ingress.yaml  -n goodnotes-takehome
+
+    - name: Start NGINX Port-Fowarding
+      uses: vbem/k8s-port-forward@v1
+      with:
+        name: service/ingress-nginx-controller
+        namespace: ingress-nginx
+        local-port: 80
+        pod-port: 80
+        kubeconfig: ~/.kube/config
+    - name: Modify /etc/hosts file
+      run: |
+        echo "127.0.0.1 foo.localhost" | sudo tee -a /etc/hosts
+        echo "127.0.0.1 bar.localhost" | sudo tee -a /etc/hosts
+        cat /etc/hosts # Verify the change
+  test-apps:
+    name: Test Apps
+    runs-on: ubuntu-latest
+    needs: create-cluster
+    steps:
+    - name: Test foo
+      run: curl http://foo.local 
+    - name: Test bar
+      run: curl http://bar.local 

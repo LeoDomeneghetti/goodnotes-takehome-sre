@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: goodnotes-takehome-repo
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  project: goodnotes-takehome
+  type: git
+  url: git@github.com:LeoDomeneghetti/goodnotes-takehome-sre.git
+  sshPrivateKey: |
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+    QyNTUxOQAAACBCzCXX1ISGBZ8aNJlI/pIaxlQPATaE56XhleuTFjI/0AAAAJBAP0KIQD9C
+    iAAAAAtzc2gtZWQyNTUxOQAAACBCzCXX1ISGBZ8aNJlI/pIaxlQPATaE56XhleuTFjI/0A
+    AAAEBBVeUxlZEpa2XuKKnqsw9n1v1UveyeYVDLaUy6bpOVbULMJdfUhIYFnxo0mUj+khrG
+    VA8BNoTnpeGV65MWMj/QAAAABmFyZ29jZAECAwQFBgc=
+    -----END OPENSSH PRIVATE KEY-----
