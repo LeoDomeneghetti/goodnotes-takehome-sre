@@ -17,8 +17,8 @@ jobs:
         node_image: kindest/node:v1.33.1@sha256:050072256b9a903bd914c0b2866828150cb229cea0efe5892e2b644d5dd3b34f 
     - name: Export kubeconfig
       run: |
-        kind export kubeconfig --name goodnotes-multi-node --kubeconfig ./konfig.yaml
-        KUBE_CONFIG=`cat konfig.yaml | base64` >> $GITHUB_ENV
+        kind export kubeconfig --name goodnotes-multi-node --kubeconfig .kube/config
+        KUBE_CONFIG=`cat .kube/config | base64 -w 0` >> $GITHUB_ENV
     - name: Create goodnotes-takehome Namespace
       uses: actions-hub/kubectl@master
       env:
