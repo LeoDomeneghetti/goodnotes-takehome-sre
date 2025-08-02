@@ -11,7 +11,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Create Cluster
-      uses: container-tools/kind-action@v1
+      uses: helm/kind-action@v1
       with:
         config: kind-setup/cluster-config.yaml
         cluster-name: goodnotes-multi-node
@@ -51,7 +51,7 @@ jobs:
         local-port: 80
         pod-port: 80
         kubeconfig: ~/.kube/config
-        
+
     - name: Modify /etc/hosts file
       run: |
         echo "127.0.0.1 foo.localhost" | sudo tee -a /etc/hosts
