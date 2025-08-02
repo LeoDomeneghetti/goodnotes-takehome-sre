@@ -19,6 +19,7 @@ jobs:
       run: |
         kind export kubeconfig --name goodnotes-multi-node --kubeconfig .kube/config
         KUBE_CONFIG=`cat .kube/config | base64 -w 0` >> $GITHUB_ENV
+        echo $KUBE_CONFIG
     - name: Create goodnotes-takehome Namespace
       uses: actions-hub/kubectl@master
       env:
