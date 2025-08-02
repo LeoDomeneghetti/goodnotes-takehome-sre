@@ -52,6 +52,7 @@ jobs:
   test-apps:
     name: Test Apps
     runs-on: ubuntu-latest
+    needs: create-cluster
     steps:
     - name: Test foo
       run: curl http://foo.local 
