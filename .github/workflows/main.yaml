@@ -22,7 +22,7 @@ jobs:
       env:
         KUBE_CONFIG: $HOME/.kube/config
       with:
-        args: kubectl create namespace goodnotes-takehome
+        args: create namespace goodnotes-takehome
       
     - name: Install NGINX Ingress Controller 
       run: |
