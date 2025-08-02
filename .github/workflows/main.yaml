@@ -13,7 +13,7 @@ jobs:
       uses: helm/kind-action@v1.12.0
       with:
         config: kind-setup/cluster-config.yaml
-        cluster-name: goodnotes-multi-node
+        cluster_name: goodnotes-multi-node
         node_image: kindest/node:v1.33.1@sha256:050072256b9a903bd914c0b2866828150cb229cea0efe5892e2b644d5dd3b34f   
     - name: Create goodnotes-takehome Namespace
       run: kubectl create namespace goodnotes-takehome
@@ -35,7 +35,7 @@ jobs:
         kubectl apply -f k8s-resources/bar-app/bar-service.yaml  -n goodnotes-takehome
         kubectl apply -f k8s-resources/bar-app/bar-ingress.yaml  -n goodnotes-takehome
     - name: Export kubeconfig
-      run: kind export kubeconfig
+      run: kind export kubeconfig --name goodnotes-multi-node
     - name: Start NGINX Port-Fowarding
       uses: vbem/k8s-port-forward@v1
       with:
